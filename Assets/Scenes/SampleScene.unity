@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 199300917}
   - component: {fileID: 199300922}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: CharacterController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 1250549021}
   - component: {fileID: 1250549020}
   m_Layer: 0
-  m_Name: Capsule (1)
+  m_Name: Rigidbody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
