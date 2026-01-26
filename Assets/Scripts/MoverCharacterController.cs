@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class MoverCharacterController : MonoBehaviour
 {
+    [SerializeField] private GroundChecker groundChecker;
+    [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
-    [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _horizontalTurnSensitivity;
     [SerializeField] private float _verticalTurnSensitivity;
     [SerializeField] private float _verticalMinAngle;
@@ -45,14 +46,15 @@ public class MoverCharacterController : MonoBehaviour
         Vector3 right = Vector3.ProjectOnPlane(_cameraTransform.right, Vector3.up).normalized;
         Vector3 moveDirection = right * Input.GetAxis("Horizontal") + forward * Input.GetAxis("Vertical");
 
-        if (_characterController.isGrounded)
+        if (groundChecker.IsGrounded)
         {
-            Jump();
+            if (Input.GetKeyDown(KeyCode.Space))
+                Jump();
+            else
+                _verticalVelocity = Physics.gravity * _gravityFactor;
         }
         else
         {
-            Vector3 horizontalVelocity = _characterController.velocity;
-            horizontalVelocity.y = 0;
             _verticalVelocity += Physics.gravity * Time.deltaTime * _gravityFactor;
         }
 
@@ -61,9 +63,6 @@ public class MoverCharacterController : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            _verticalVelocity = Vector3.up * _jumpForce;
-        else
-            _verticalVelocity = Physics.gravity * _gravityFactor;
+        _verticalVelocity = Vector3.up * _jumpForce;
     }
 }
