@@ -3,7 +3,7 @@ using UnityEngine;
 public class BulletSpawner : MonoBehaviour
 {
     [SerializeField] private Catapult _catapult;
-    [SerializeField] private GameObject _bullet;
+    [SerializeField] private Bullet _bullet;
 
     private void Awake()
     {

@@ -4,6 +4,7 @@ using UnityEngine;
 public class ForceAdder : MonoBehaviour
 {
     [SerializeField] private float _force;
+    [SerializeField] private InputReader _inputReader;
 
     private Rigidbody _rigidbody;
     private Transform _transform;
@@ -14,9 +15,18 @@ public class ForceAdder : MonoBehaviour
         _transform = transform;
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-            _rigidbody.AddForce(_transform.forward * _force);
+        _inputReader.ForceAdding += AddForce;
+    }
+
+    private void OnDisable()
+    {
+        _inputReader.ForceAdding -= AddForce;
+    }
+
+    private void AddForce()
+    {
+        _rigidbody.AddForce(_transform.forward * _force);
     }
 }

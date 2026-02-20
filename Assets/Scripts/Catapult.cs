@@ -4,7 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Catapult : MonoBehaviour
 {
-    readonly private string IsShootAnimatorName = "IsShoot";
+    [SerializeField] private InputReader _inputReader;
+
+    private readonly string _isShootAnimatorName = "IsShoot";
 
     private Animator _animator;
 
@@ -15,16 +17,26 @@ public class Catapult : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            _animator.SetBool(IsShootAnimatorName, true);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            _animator.SetBool(IsShootAnimatorName, false);
-            GettingReady?.Invoke();
-        }
+        _inputReader.Shooting += Shoot;
+        _inputReader.GettingReady += GetReady;
+    }
+
+    private void OnDisable()
+    {
+        _inputReader.Shooting -= Shoot;
+        _inputReader.GettingReady -= GetReady;
+    }
+
+    private void Shoot()
+    {
+        _animator.SetBool(_isShootAnimatorName, true);
+    }
+
+    private void GetReady()
+    {
+        _animator.SetBool(_isShootAnimatorName, false);
+        GettingReady?.Invoke();
     }
 }

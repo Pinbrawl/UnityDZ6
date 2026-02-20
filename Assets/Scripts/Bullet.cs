@@ -7,10 +7,10 @@ public class Bullet : MonoBehaviour
 
     private void Awake()
     {
-        StartCoroutine(Timer());
+        StartCoroutine(StartTimer());
     }
 
-    private IEnumerator Timer()
+    private IEnumerator StartTimer()
     {
         yield return new WaitForSecondsRealtime(_lifeTime);
         Destroy(gameObject);
